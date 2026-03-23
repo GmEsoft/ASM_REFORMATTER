@@ -416,3 +416,10 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# other files
+ASM_REFORMATTER/OLD
+ASM_REFORMATTER/*.asm
+backup.bat
+*.bak
+*.exe
