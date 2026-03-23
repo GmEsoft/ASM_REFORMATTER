@@ -2,10 +2,14 @@
   "files.associations": {
     "*.asm": "asm-collection"
   },
-  "editor.tabSize": 4,
+  "editor.tabSize": 8,
   "editor.insertSpaces": false,
   "[asm-collection]": {
     "editor.tabSize": 8,
+    "editor.insertSpaces": false
+  },
+  "[c]": {
+    "editor.tabSize": 4,
     "editor.insertSpaces": false
   }
 }

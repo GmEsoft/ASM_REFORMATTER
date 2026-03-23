@@ -16,16 +16,13 @@ A command-line tool to reformat assembly language source code with configurable 
 
 ## Usage
 
-```
-reformat -U|-L -I:infile [-O:outfile] [opts...]
+```ps
+reformat -I:infile [-O:outfile] [opts...]
 ```
 
 ### Required Arguments
 
 - `-I:infile` - Input assembly source file
-
-### Output
-
 - `-O:outfile` - Output reformatted assembly file (default: stdout if not specified)
 
 ### Options
@@ -44,17 +41,17 @@ reformat -U|-L -I:infile [-O:outfile] [opts...]
 ## Examples
 
 ### Basic reformatting with upper-case and custom tab size:
-```bash
+```ps
 reformat -U -T:4 -I:input.asm -O:output.asm
 ```
 
 ### Convert 8080 code to Z-80 with upper-case:
-```bash
+```ps
 reformat -U -XZ -T:4 -M:2 -C:4 -I:old_8080.asm -O:new_z80.asm
 ```
 
 ### Reformat with lower-case mnemonics:
-```bash
+```ps
 reformat -L -T:8 -M:2 -I:input.asm -O:output.asm
 ```
 
@@ -86,6 +83,7 @@ When using the `-XZ` option, the tool converts:
 - **Registers**: B → BC, D → DE, H → HL, PSW → AF
 - **Memory references**: M → (HL)
 - **Arithmetic/Logic**: ADD → ADD A, SUB → SUB, ANA → AND, XRA → XOR, ORA → OR
+- ...
 
 ## License
 
