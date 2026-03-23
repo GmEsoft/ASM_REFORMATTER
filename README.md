@@ -17,13 +17,13 @@ A command-line tool to reformat assembly language source code with configurable 
 ## Usage
 
 ```ps
-reformat -I:infile [-O:outfile] [opts...]
+reformat -I:infile -O:outfile [opts...]
 ```
 
 ### Required Arguments
 
 - `-I:infile` - Input assembly source file
-- `-O:outfile` - Output reformatted assembly file (default: stdout if not specified)
+- `-O:outfile` - Output reformatted assembly file
 
 ### Options
 
