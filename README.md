@@ -1,4 +1,4 @@
-# ASM Reformatter
+# ASM Reformatter and 8080 to Z-80 Code Conversion Tool
 
 A command-line tool to reformat assembly language source code with configurable formatting options. Supports 8080 to Z-80 assembly code conversion.
 
@@ -59,20 +59,30 @@ reformat -L -T:8 -M:2 -I:input.asm -O:output.asm
 
 **Input:**
 ```asm
-start:jmp	main
-main:	mov	a,b	;move b to a
-add a,c
-ret
+    .org    CBASE - 32      ; iLoad starting address
+    ld      sp, $80         ; Set local SP
+    ; Mount th SD
+    ld      a, SDMOUNT_OPC  ; Select SDMOUNT opcode (IOS)
+    out     (STO_OPCD), a
+    in      a, (EXC_RD_OPCD); Call it
+    ld      a, SDMOUNT_OPC  ; Select SDMOUNT opcode (IOS)
+    out     (STO_OPCD), a
+    in      a, (EXC_RD_OPCD); Call it
+    jp      BOOT            ; Jump to BIOS Cold Boot
 ```
 
-**Output (with `-U -T:4 -M:2 -C:4`):**
+**Output (with `-U -T:8 -M:1 -C:4`):**
 ```asm
-START:
-    JP	MAIN
-MAIN:
-    MOV	A,B		;move b to a
-    ADD	A,C
-    RET
+        .ORG    CBASE - 32      ; iLoad starting address
+        LD      SP, $80         ; Set local SP
+                                ; Mount th SD
+        LD      A, SDMOUNT_OPC  ; Select SDMOUNT opcode (IOS)
+        OUT     (STO_OPCD), A
+        IN      A, (EXC_RD_OPCD); Call it
+        LD      A, SDMOUNT_OPC  ; Select SDMOUNT opcode (IOS)
+        OUT     (STO_OPCD), A
+        IN      A, (EXC_RD_OPCD); Call it
+        JP      BOOT            ; Jump to BIOS Cold Boot
 ```
 
 ## 8080 to Z-80 Conversion
@@ -84,6 +94,45 @@ When using the `-XZ` option, the tool converts:
 - **Memory references**: M → (HL)
 - **Arithmetic/Logic**: ADD → ADD A, SUB → SUB, ANA → AND, XRA → XOR, ORA → OR
 - ...
+
+**Input:**
+```asm
+	noread:	;enter here from submit file
+	;set the last character to zero for later scans
+	lxi h,comlen! mov b,m ;length is in b
+	readcom0: inx h! mov a,b! ora a ;end of scan?
+		jz readcom1! mov a,m ;get character and translate
+		call translate! mov m,a! dcr b! jmp readcom0
+		;
+	readcom1: ;end of scan, h,l address end of command
+		mov m,a ;store a zero
+		lxi h,combuf! shld comaddr ;ready to scan to zero
+	ret
+```
+
+**Output (with `-u -m:1 -c:4 -s:! -xs -xn -xz`):**
+```asm
+NOREAD:	;enter here from submit file
+        ;set the last character to zero for later scans
+        LD      HL,COMLEN
+        LD      B,(HL)          ;length is in b
+READCOM0:INC    HL
+        LD      A,B
+        OR      A               ;end of scan?
+        JP      Z,READCOM1
+        LD      A,(HL)          ;get character and translate
+        CALL    TRANSLATE
+        LD      (HL),A
+        DEC     B
+        JP      READCOM0
+        ;
+READCOM1:;end of scan, h,l address end of command
+        LD      (HL),A          ;store a zero
+        LD      HL,COMBUF
+        LD      (COMADDR),HL    ;ready to scan to zero
+        RET
+```
+
 
 ## License
 
