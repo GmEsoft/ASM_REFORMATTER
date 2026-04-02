@@ -30,13 +30,14 @@ reformat -I:infile -O:outfile [opts...]
 - `-T:n` - Tab size in spaces (default: 8)
 - `-M:n` - Mnemonics column tab position (default: 2)
 - `-C:n` - Comments column tab position (default: 4)
-- `-U` - Convert to upper-case (mnemonics and registers only)
-- `-L` - Convert to lower-case (mnemonics and registers only)
+- `-U`   - Convert to upper-case (mnemonics and registers only)
+- `-L`   - Convert to lower-case (mnemonics and registers only)
 - `-S:c` - Multi-statement separator character (default: '!')
-- `-XZ` - Convert 8080 assembly code to Z-80 code
-- `-XS` - Allow separator character in comments
-- `-XN` - Align no-instruction comments with mnemonics column
-- `-?` - Display help message
+- `-XE`  - Add EOF char at end of file
+- `-XN`  - Align no-instruction comments with mnemonics column
+- `-XS`  - Allow separator character in comments
+- `-XZ`  - Convert 8080 assembly code to Z-80 code
+- `-?`   - Display help message
 
 ## Examples
 
@@ -144,4 +145,4 @@ GmEsoft (2026)
 
 ## Version
 
-0.2
+0.4

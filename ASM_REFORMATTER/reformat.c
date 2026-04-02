@@ -42,7 +42,7 @@
  * to Z-80 assembly code.
  *
  * Author: GmEsoft
- * Version: 0.2
+ * Version: 0.4
  *
  */
 
@@ -54,7 +54,7 @@
 #include <fcntl.h>    // O_RDWR...
 #include <sys/stat.h> // S_IWRITE
 
-#define REFORMAT "ASM reformatter V0.2, (C) 2026 by GmEsoft"
+#define REFORMAT "ASM reformatter V0.4, (C) 2026 by GmEsoft"
 
 #define TRACE 0
 #define TRC if(TRACE)
@@ -79,9 +79,10 @@ void help()
 		"   -S:c        Multi-statements separator (default: '!')\n"			// sep
 		"   -T:n        Tab size (default: 8)\n"								// tabsize
 		"   -U          Convert to upper-case (except literals and comments)\n" // ucase
-		"   -XZ         Convert 8080 code to Z-80 code\n"						// conv_z80
-		"   -XN		    Do not align no-instruction comments with mnemonics\n"	// noinstr_comments
+		"   -XE	        Add EOF char at end of file\n"							// eof
+		"   -XN	        Do not align no-instruction comments with mnemonics\n"	// noinstr_comments
 		"   -XS         Do not convert multi-statement separator in comments\n" // sep_in_comment
+		"   -XZ         Convert 8080 code to Z-80 code\n"						// conv_z80
 		"   -?          Show this help message\n"
 		"Example:\n"
 		"   reformat -U -T:4 -M:2 -N:4 -I:input.asm -O:output.asm\n");
@@ -101,6 +102,7 @@ typedef struct
 	int		sep_in_comment;			// Allow 'sep' in comments
 	int		noinstr_comments;		// Align no-instr comments with mnemonics
 	int		conv_z80;				// Convert 8080 code to Z-80
+	int		eof;					// Add EOF code at end of file
 } options_t;
 
 
@@ -827,6 +829,7 @@ void reformat( FILE *infile, FILE *outfile, options_t *opts )
 			}
 		}
 	}
+	putc( 0x1A, outfile );
 	puts( "End of file" );
 }
 
@@ -852,7 +855,8 @@ int main( int argc, char* argv[] )
 		.lcase = 0,
 		.sep_in_comment = 0,
 		.noinstr_comments = 0,
-		.conv_z80 = 0
+		.conv_z80 = 0,
+		.eof = 0
 	};
 
 	for ( i=1; i<argc; ++i )
@@ -899,7 +903,10 @@ int main( int argc, char* argv[] )
 			++s;
 			if ( *s == ':' )
 				++s;
-			opts.sep = *s;
+			if ( *s )
+				opts.sep = *s;
+			else
+				opts.sep = '!'; // Default separator character if none provided
 			break;
 		case 'T': // Tab size
 			++s;
@@ -913,7 +920,9 @@ int main( int argc, char* argv[] )
 			break;
 		case 'X': // Extra options
 			++s;
-			if ( toupper( *s ) == 'S' ) // Allow separator in comments
+			if ( toupper( *s ) == 'E' ) // Add EOF char at end of file
+				opts.eof = 1;
+			else if ( toupper( *s ) == 'S' ) // Allow separator in comments
 				opts.sep_in_comment = 1;
 			else if ( toupper( *s ) == 'N' ) // Align No-instr comments with mnemonics
 				opts.noinstr_comments = 1;
