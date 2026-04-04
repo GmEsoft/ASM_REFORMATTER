@@ -27,19 +27,19 @@ LDY	MACRO	?R,?D		;LD	?R,(IY+?D)
 	DB	0FDH,?R*8+46H,?D
 	ENDM
 STX	MACRO	?R,?D		;LD	(IX+?D),?R
-	@CHK	?D
+	@CHK	?D		;Invoke using STX ?R,?D !!
 	DB	0DDH,70H+?R,?D
 	ENDM
 STY	MACRO	?R,?D		;LD	(IY+?D),?R
-	@CHK	?D
+	@CHK	?D		;Invoke using STY ?R,?D !!
 	DB	0FDH,70H+?R,?D
 	ENDM
 MVIX	MACRO	?N,?D		;LD	(IX+?D),?N
-	@CHK	?D
+	@CHK	?D		;Invoke using MVIX ?N,?D !!
 	DB	0DDH,36H,?D,?N
 	ENDM
 MVIY	MACRO	?N,?D		;LD	(IY+?D),?N
-	@CHK	?D
+	@CHK	?D		;Invoke using MVIY ?N,?D !!
 	DB	0FDH,36H,?D,?N
 	ENDM
 LDAI	MACRO			;LD	A,I
