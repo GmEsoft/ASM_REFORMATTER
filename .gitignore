@@ -417,9 +417,12 @@ FodyWeavers.xsd
 *.msm
 *.msp
 
-# other files
+# Specific Project files
+ASM_REFORMATTER/CPM_SRC
 ASM_REFORMATTER/OLD
-ASM_REFORMATTER/*.asm
 backup.bat
 *.bak
+*.tmp
 *.exe
+/ASM_REFORMATTER/test_conv.bat
+/ASM_REFORMATTER/test_reformat.bat
