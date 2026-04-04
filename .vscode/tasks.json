@@ -1,0 +1,25 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run build.bat",
+			"type": "shell",
+			"command": "${workspaceFolder}/ASM_REFORMATTER/build.bat",
+			"args": [
+				"/Za",
+				"/W4",
+				"/WX",
+				"/wd4001"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated"
+			},
+			"problemMatcher": []
+		}
+	]
+}
