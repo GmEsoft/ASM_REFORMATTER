@@ -256,6 +256,11 @@ STREAM$OUT:
 ```
 
 
+## Links
+
+- 8080 instruction set: https://www.pastraiser.com/cpu/i8080/i8080_opcodes.html
+- Z-80 instruction set: https://clrhome.org/table/
+
 ## License
 
 GNU General Public License v3.0 or later
