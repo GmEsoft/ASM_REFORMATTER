@@ -28,7 +28,7 @@ static char *convz80reg16( char *reg )
 		return "DE";
 	if ( !_strcmpi( reg, "H" ) )
 		return "HL";
-	if ( !_strcmpi( reg, "PSW" ) )
+	if ( !_strcmpi( reg, "PSW" ) || !_strcmpi( reg, "A" ) ) // sometimes we encounter PUSH A instead of PUSH PSW
 		return "AF";
 	return reg;
 }

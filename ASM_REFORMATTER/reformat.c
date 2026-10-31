@@ -62,7 +62,7 @@
 #include <fcntl.h>    // O_RDWR...
 #include <sys/stat.h> // S_IWRITE
 
-#define REFORMAT "ASM reformatter V0.6, (C) 2026 by GmEsoft"
+#define REFORMAT "ASM reformatter V0.7, (C) 2026 by GmEsoft"
 
 
 
